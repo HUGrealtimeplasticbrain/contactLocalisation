@@ -1,0 +1,15 @@
+from soma import aims
+
+mesh = aims.read(str(dirightHippo.fullPath()))
+testhippocut = aims.AimsSurfaceTriangle()
+testhippocut2 = aims.AimsSurfaceTriangle()
+border = aims.AimsTimeSurface(2)
+border2 = aims.AimsTimeSurface(2)
+aims.SurfaceManip.cutMesh(mesh, [rotation[2,2], rotation[2,1], rotation[2,0], -numpy.inner(rotation[2,:],center)], testhippocut, border)
+aims.SurfaceManip.cutMesh(mesh, [-rotation[2,2], -rotation[2,1], -rotation[2,0], numpy.inner(rotation[2,:],center)], testhippocut2, border2)
+planmesh = aims.SurfaceManip.meshPlanarPolygon([rotation[2,2], rotation[2,1], rotation[2,0], -numpy.inner(rotation[2,:],center)], border)
+planmesh2 = aims.SurfaceManip.meshPlanarPolygon([-rotation[2,2], -rotation[2,1], -rotation[2,0], numpy.inner(rotation[2,:],center)], border2)
+aims.SurfaceManip.meshMerge(testhippocut,planmesh)
+aims.SurfaceManip.meshMerge(testhippocut2,planmesh2)
+aims.write(testhippocut,'/tmp/testhippocut.gii')
+aims.write(testhippocut2,'/tmp/testhippocut2.gii')
